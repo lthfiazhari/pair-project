@@ -5,6 +5,7 @@ const app = express();
 const port = 3000;
 const http = require('http').Server(app)
 const io = require('socket.io')(http);
+const session = require("express-session")
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended : true }));
@@ -23,6 +24,14 @@ app.use(express.urlencoded({ extended : true }));
 //         io.emit('message', message);
 //     })
 // })
+
+//=====sesssion di app=============
+
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true
+  }))
 
 app.use(express.static(__dirname + '/public'))
 app.use(router);

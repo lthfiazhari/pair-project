@@ -1,5 +1,5 @@
 const { User } = require('../models');
-
+const {checkPass} = require('../helpers/bcrypt')
 class Controller {
   static main (req, res) {
     console.log(`URL: ${req.originalUrl}`);
@@ -11,7 +11,12 @@ class Controller {
       email: req.body.email,
       password: req.body.password
     }})
-      .then(data => res.redirect(`/home?alerts=Selamat datang ${data.username}`))
+      .then(data => {
+        if (data && checkPass(password, data.password)) {
+          req.session.userId = data.id
+          res.redirect(`/home?alerts=Selamat datang ${data.username}`) //< check password hashing
+        }
+      })
       .catch(err => {
         const msg = [];
         

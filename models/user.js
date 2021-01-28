@@ -2,6 +2,8 @@
 const {
   Model
 } = require('sequelize');
+
+const {convert} = require('../helpers/bcrypt')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -36,23 +38,26 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
-      validate: {
-        rules(value) {
-          value = value.split('');
-          let count = 0;
+      // validate: {
+      //   rules(value) {
+      //     value = value.split('');
+      //     let count = 0;
 
-          value.forEach(el => {
-            if (el % 1 == 0) count++;
-          })
+      //     value.forEach(el => {
+      //       if (el % 1 == 0) count++;
+      //     })
 
-          if (!value.length) throw new Error('Password tidak boleh kosong');
-          else if (value.length < 8 || count == 0 || count == value.length) throw new Error('Password harus minimal 8 digit kombinasi huruf dan angka');
-        }
-      }
+      //     if (!value.length) throw new Error('Password tidak boleh kosong');
+      //     else if (value.length < 8 || count == 0 || count == value.length) throw new Error('Password harus minimal 8 digit kombinasi huruf dan angka');
+      //   }
+      // }
     }
   }, {
     hooks: {
-
+      beforeCreate: function(user, options) {
+        let hashingPassword = convert(user.password)
+        user.password = hashingPassword //<=== hooks password dari helper bcrypt
+      }
     },
     sequelize,
     modelName: 'User',
