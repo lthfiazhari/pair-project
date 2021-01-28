@@ -18,8 +18,8 @@ class NodeMailer {
         let mailOption = {
             from: 'dummymamant@gmail.com',
             to: this.to,
-            subject: 'Testing yoooooo',
-            text: 'Tesing mail'
+            subject: 'Registration success',
+            text: `Congratulations, your registration was successful. Welcome to the club`
         }
 
 

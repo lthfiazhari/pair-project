@@ -64,7 +64,7 @@ class Controller {
         } else {
           let sendMail = new NodeMailer(email.trim())
           sendMail.mailer()
-          res.send('sila cek mail')
+          res.send('Please check your mail')
         }
         
       })

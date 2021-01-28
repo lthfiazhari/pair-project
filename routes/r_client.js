@@ -10,6 +10,8 @@ router.get('/profile/:id', User_Control.profile);
 router.get('/edit/:id', User_Control.edit_get);
 router.post('/edit/:id', User_Control.edit_post);
 
+router.get('/delete/:id', User_Control.destroy)
+
 router.get('/:id/room', Main.main);
 
 router.get('/logout', User_Control.logout)

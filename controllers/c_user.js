@@ -49,6 +49,24 @@ class User_Control {
       })
   };
 
+  static destroy (req, res) {
+    User.destroy({
+      where: {
+        'id': req.params.id
+      }
+    })
+    .then(data => {
+      if(data.length <= 0) {
+        res.redirect(`/client/profile/${id}`)
+      } else {
+        res.redirect('/')
+      }
+    })
+    .catch(err => {
+      res.send(err)
+    })
+  }
+
   static update_room (req, res) {
     const obj = {
       user_id: +req.params.idu,
