@@ -8,8 +8,6 @@ function convert(input) {
     return hash
 }
 
-// let pass = convert('password')
-
 
 function checkPass(password, passwordDB) {
     let result = bcrypt.compareSync(password, passwordDB); // true
@@ -17,6 +15,5 @@ function checkPass(password, passwordDB) {
     return result
 }
 
-// console.log(checkPass('passwored', pass));
 
 module.exports = {convert, checkPass}
