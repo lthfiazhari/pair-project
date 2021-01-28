@@ -4,6 +4,7 @@ const {
 } = require('sequelize');
 
 const {convert} = require('../helpers/bcrypt')
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -51,10 +52,12 @@ module.exports = (sequelize, DataTypes) => {
       //     else if (value.length < 8 || count == 0 || count == value.length) throw new Error('Password harus minimal 8 digit kombinasi huruf dan angka');
       //   }
       // }
-    }
+    },
+    role: DataTypes.STRING,
   }, {
     hooks: {
       beforeCreate: function(user, options) {
+        if (!user.role) user.role = 'client';
         let hashingPassword = convert(user.password)
         user.password = hashingPassword //<=== hooks password dari helper bcrypt
       }

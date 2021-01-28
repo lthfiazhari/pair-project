@@ -1,22 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= data.username %> Profile</title>
-</head>
-<style>
-    #hide {
-        display: block;
-    }
-    #data {
-        display: none;
-    }
-</style>
-<body>
-    <%- include('../partials/v_alert') %>
-    <a href="/client/edit/<%= data.id %>">Edit</a><br>
-    <table>
+<%- include('../partials/v_client_header') %>
+    <style>
+        #hide {
+            display: block;
+        }
+        #data {
+            display: none;
+        }
+    </style>
+    
+    <table border="1">
         <thead>
             <tr>
                 <th>Username</th>
@@ -38,7 +30,9 @@
                 </th>
             </tr>
         </tbody>
-    </table>
+    </table><br>
+
+    <a href="/client/edit/<%= data.id %>"><button>Edit</button></a>
 
     <script>
         function show () {

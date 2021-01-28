@@ -1,4 +1,4 @@
-const { User, Sequelize } = require('../models');
+const { User } = require('../models');
 const {checkPass} = require('../helpers/bcrypt')
 const NodeMailer = require('../helpers/mailer')
 class Controller {
@@ -19,7 +19,7 @@ class Controller {
         } else {
           if (checkPass(req.body.password, data.password)) {
             req.session.userId = data.id
-            res.redirect(`/home/${data.id}?alerts=Selamat datang ${data.username}`) //< check password hashing
+            res.redirect(`/client/${data.id}?alerts=Selamat datang ${data.username}`) //< check password hashing
           } else {
             res.send(`invalid username or password`) 
           }
@@ -52,7 +52,6 @@ class Controller {
         })
 
         if (!alerts.length) {
-          console.log(req.body)
           alerts.push('Berhasil membuat akun, silahkan login');
           return User.create(req.body);
         } else {
