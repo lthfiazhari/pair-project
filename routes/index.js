@@ -7,8 +7,8 @@ const { Controller } = require('../controllers');
 const checkLogin = function (req, res, next) {
   console.log(req.session.userId);
 
-  if(req.session.userId) next();
-  else res.redirect("/")
+  if (req.session.userId) next();
+  else res.redirect("/");
 }
 
 router.get('/', Controller.main);

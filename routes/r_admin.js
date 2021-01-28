@@ -3,7 +3,7 @@ const { Admin_Control } = require('../controllers/c_admin');
 const { User_Control } = require('../controllers/c_user');
 const { Main } = require('../controllers/c_main')
 
-router.get('/:id', Admin_Control.main);
+router.get('/:id', User_Control.main);
 router.get('/:idu/register/:idr', User_Control.update_room);
 
 router.get('/profile/:id', User_Control.profile);

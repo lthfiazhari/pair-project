@@ -4,6 +4,7 @@ const path = require('path');
 const http = require('http');
 const router = require('./routes');
 const { format_message, user_join, user_get, user_leave, user_room } = require('./helpers')
+const session = require('express-session');
 
 const app = express();
 const server = http.createServer(app);
