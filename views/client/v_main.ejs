@@ -21,7 +21,7 @@
                 <% data.Rooms.forEach(el => { %>
                     <tr>
                         <th><%= el.name %></th>
-                        <th><a href="">Join</a></th>
+                        <th><a href="/chat?username=<%= data.username %>&room=<%= el.name %>">Join</a></th>
                     </tr>
                 <% }) %>
             </tbody>
@@ -41,11 +41,22 @@
                 </tr>
             </thead>
             <tbody>
-                <% result.forEach(el => { %>
-                    <% if (!el.Users.length) { %>
+                <% result.forEach(elr => { %>
+                    <% let count = 0; %>
+                    <% if (data.Rooms.length) { %>
+                        <% data.Rooms.forEach(eld => { %>
+                            <% if (eld.id == elr.id) count++ %>
+                        <% }) %>
+                        <% if (!count) { %>
+                            <tr>
+                                <th><%= elr.name %></th>
+                                <th><a href="/<%= data.role %>/<%= data.id %>/register/<%= elr.id %>">Register</a></th>
+                            </tr>
+                        <% } %>
+                    <% } else { %>
                         <tr>
-                            <th><%= el.name %></th>
-                            <th><a href="/client/<%= data.id %>/register/<%= el.id %>">Register</a></th>
+                            <th><%= elr.name %></th>
+                            <th><a href="/<%= data.role %>/<%= data.id %>/register/<%= elr.id %>">Register</a></th>
                         </tr>
                     <% } %>
                 <% }) %>
@@ -54,6 +65,11 @@
     <% } else { %>
         <h3 id="room">Room Kosong, silahkan meminta Admin untuk membuat Room</h3>
     <% } %>
+
+    <% if (data.role == 'admin') { %>
+        <a href="/admin/<%= data.id %>/add">Add</a>
+    <% } %>
+
 
     <script>
         function show () {

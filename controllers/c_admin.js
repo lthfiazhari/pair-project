@@ -1,55 +1,29 @@
-const { User } = require('../models');
+const { Room } = require('../models');
 
 class Admin_Control {
-  static main (req, res) {
-    console.log(`URL: ${req.originalUrl}`);
-    User.findByPk(req.params.id)
-      .then(data => res.render('admin/v_main', { error: req.params.alerte, success: req.params.alerts, data }))
-      .catch(err => res.redirect(`/?alerte=${err}`))
-  };
-
-  static edit_client_get (req, res) {
-    console.log(`URL: ${req.originalUrl}`);
-  };
-
-  static edit_client_post (req, res) {
-
-  };
-
-  static create_admin_get (req, res) {
-    console.log(`URL: ${req.originalUrl}`);
-  };
-
-  static create_admin_post (req, res) {
-
-  };
-
-  static edit_admin_get (req, res) {
-    console.log(`URL: ${req.originalUrl}`);
-  };
-
-  static edit_admin_post (req, res) {
-
-  };
-
   static create_room_get (req, res) {
     console.log(`URL: ${req.originalUrl}`);
+    const data = {
+      id: req.params.id,
+      role: 'admin'
+    }
+    res.render('client/v_add', { title: 'Create', error: req.query.alerte, success: req.query.alerts, data })
   }
 
   static create_room_post (req, res) {
+    Room.create(req.body)
+      .then(() => res.redirect(`/admin/${req.params.id}?alerts=Berhasil membuat Room ${req.body.name}`))
+      .catch(err => {
+        const msg = [];
+        
+        if (err.errors.length) {
+          err.errors.forEach(el => {
+            msg.push(el.message);
+          });
+        }
 
-  };
-
-  static main_room (req, res) {
-    console.log(`URL: ${req.originalUrl}`);
-  };
-
-  static edit_room_get (req, res) {
-    console.log(`URL: ${req.originalUrl}`);
-  };
-
-  static edit_room_post (req, res) {
-
+        res.redirect(`/admin/${req.params.id}/add?alerte=${msg}`);
+      })
   };
 };
 

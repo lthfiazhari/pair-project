@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= data.username %> Edit</title>
+    <title><%= title %></title>
 </head>
+<link rel="stylesheet" href="css/style.css">
 <body>
-    <a href="/client/<%= data.id %>">Home</a>|
-    <a href="/client/profile/<%= data.id %>">Profile</a>|
-    <a href="">Logout</a>|<br><br>
+    <a href="/<%= data.role %>/<%= data.id %>">Home</a>|
+    <a href="/<%= data.role %>/profile/<%= data.id %>">Profile</a>|
+    <a href="/<%= data.role %>/logout">Logout</a>|<br><br>
 
     <%- include('./v_alert') %>

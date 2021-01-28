@@ -1,23 +1,21 @@
 const router = require('express').Router();
 const { Admin_Control } = require('../controllers/c_admin');
+const { User_Control } = require('../controllers/c_user');
+const { Main } = require('../controllers/c_main')
 
 router.get('/:id', Admin_Control.main);
+router.get('/:idu/register/:idr', User_Control.update_room);
 
-router.get('/client/:id', Admin_Control.edit_client_get);
-router.post('/client/:id', Admin_Control.edit_client_post);
+router.get('/profile/:id', User_Control.profile);
 
-router.get('/create', Admin_Control.create_admin_get);
-router.post('/create', Admin_Control.create_admin_post);
+router.get('/edit/:id', User_Control.edit_get);
+router.post('/edit/:id', User_Control.edit_post);
 
-router.get('/edit/:id', Admin_Control.edit_admin_get);
-router.post('/edit/:id', Admin_Control.edit_admin_post);
+router.get('/admin/:id/add', Admin_Control.create_room_get);
+router.post('/admin/:id/add', Admin_Control.create_room_post);
 
-router.get('/room', Admin_Control.main_room);
+router.get('/:id/room', Main.main);
 
-router.get('/room/add', Admin_Control.create_room_get);
-router.post('/room/add', Admin_Control.create_room_post);
-
-router.get('/room/edit/:id', Admin_Control.edit_room_get);
-router.get('/room/edit/:id', Admin_Control.edit_room_post);
+router.get('/logout', User_Control.logout);
 
 module.exports = router;

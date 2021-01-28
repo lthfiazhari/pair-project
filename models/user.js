@@ -2,6 +2,9 @@
 const {
   Model
 } = require('sequelize');
+
+const { convert } = require('../helpers/bcrypt');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -15,6 +18,18 @@ module.exports = (sequelize, DataTypes) => {
         through: 'ChatRooms',
         foreignKey: 'user_id'
       })
+    }
+
+    capital(data) {
+      let res = [];
+
+      for(let i = 0; i < data.length; i++) {
+          if (i === 0) res.push(data[i].toUpperCase());
+          else res.push(data[i]);
+      }
+
+      res = res.join('');
+      return res;
     }
   };
   User.init({
@@ -53,10 +68,11 @@ module.exports = (sequelize, DataTypes) => {
     role: DataTypes.STRING
   }, {
     hooks: {
-      beforeCreate: {
-        beforeCreate: (user, options) => {
-          if (!user.role) user.role = 'client';
-        }
+      beforeCreate: (user, options) => {
+        if (!user.role) user.role = 'client';
+
+        let hashingPassword = convert(user.password);
+        user.password = hashingPassword;
       }
     },
     sequelize,

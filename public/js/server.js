@@ -1,17 +1,25 @@
 const socket = io();
 const chat_form = document.getElementById('chat_form');
 const chat_message = document.querySelector('.chat-message');
+const room_name = document.getElementById('room-name');
+const user_list = document.getElementById('users');
 
 // mengambil username dan room dari req.params
 const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true
 })
 
-console.log(username, room);
+// add data to client room
+socket.emit('join_room', { username, room })
+
+// mendapatkan room dan user dari server
+socket.on('room_user', ({ room, users }) => {
+  outputRoomName(room);
+  outputUsers(users);
+})
 
 // melempar js ke ejs (karena di ejs hanya memanggil script server.js)
 socket.on('message', message => {
-  console.log(message);
   // mandapatkan message dari server
   outputMessage(message);
 
@@ -50,3 +58,22 @@ function outputMessage (message) {
   // melempar div yang dibuat kedalam div penampung di client
   document.querySelector('.chat-main').appendChild(div);
 }
+
+// menambahkan nama room di dalam client ejs
+function outputRoomName (room) {
+  room_name.innerText = room;
+};
+
+// menambahkan nama user yang ada didalam room chat client ejs
+function outputUsers (users) {
+  // user_list.innerHTML = `${users.map(user => `<li>${user.username}</li>`).join('')}`;
+
+  user_list.innerHTML = '';
+  users.forEach(user => {
+    const li = document.createElement('li');
+    li.innerText = user.username;
+    user_list.appendChild(li);
+  });
+
+  console.log(user_list.innerHTML);
+};
