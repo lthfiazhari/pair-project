@@ -6,7 +6,7 @@ class NodeMailer {
         this.to = email
     }
 
-    static mailer() {
+    mailer() {
         let transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -21,6 +21,7 @@ class NodeMailer {
             subject: 'Testing yoooooo',
             text: 'Tesing mail'
         }
+
 
         transporter.sendMail(mailOption, function(err, data) {
             if (err) {

@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Sequelize } = require('../models');
 const {checkPass} = require('../helpers/bcrypt')
 const NodeMailer = require('../helpers/mailer')
 class Controller {
@@ -8,25 +8,33 @@ class Controller {
   };
 
   static login (req, res) {
-    User.findAll({ where: { 
-      email: req.body.email,
-      password: req.body.password
-    }})
+    User.findOne({
+      where: { 
+        email: req.body.email,
+      }
+    })
       .then(data => {
-        if (data && checkPass(password, data.password)) {
-          req.session.userId = data.id
-          res.redirect(`/home?alerts=Selamat datang ${data.username}`) //< check password hashing
-        } else {
+        if (!data) {
           res.send(`invalid username or password`) 
+        } else {
+          if (checkPass(req.body.password, data.password)) {
+            req.session.userId = data.id
+            res.redirect(`/home/${data.id}?alerts=Selamat datang ${data.username}`) //< check password hashing
+          } else {
+            res.send(`invalid username or password`) 
+          }
         }
       })
       .catch(err => {
+        console.log(err);
         const msg = [];
         
-        if (err.errors.length) {
+        if (err.errors && err.errors.length) {
           err.errors.forEach(el => {
             msg.push(el.message)
           });
+        } else {
+          msg.push(err.message)
         }
 
         res.redirect(`/?alerte=${msg}`)
@@ -44,14 +52,22 @@ class Controller {
         })
 
         if (!alerts.length) {
+          console.log(req.body)
           alerts.push('Berhasil membuat akun, silahkan login');
           return User.create(req.body);
-        } else return '';
+        } else {
+          return null;
+        }
       })
       .then((data) => {
-        let sendMail = new NodeMailer(email.trim())
-        sendMail.mailer()
-        res.redirect(`/?alerts=${alerts}`)
+        if (!data) {
+          res.redirect(`/?alerts=${alerts.join('&')}`)
+        } else {
+          let sendMail = new NodeMailer(email.trim())
+          sendMail.mailer()
+          res.send('sila cek mail')
+        }
+        
       })
       .catch(err => {
         const msg = [];

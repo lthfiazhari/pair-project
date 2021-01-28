@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs');
 function convert(input) {
     let salt = bcrypt.genSaltSync(10);
     let hash = bcrypt.hashSync(input, salt);
-
     return hash
 }
 

@@ -3,6 +3,7 @@ const router = require('./routes');
 
 const app = express();
 const port = 3000;
+// const port = process.env.PORT || 4000
 const http = require('http').Server(app)
 const io = require('socket.io')(http);
 const session = require("express-session")
