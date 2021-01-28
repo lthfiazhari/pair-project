@@ -11,8 +11,8 @@ router.get('/profile/:id', User_Control.profile);
 router.get('/edit/:id', User_Control.edit_get);
 router.post('/edit/:id', User_Control.edit_post);
 
-router.get('/admin/:id/add', Admin_Control.create_room_get);
-router.post('/admin/:id/add', Admin_Control.create_room_post);
+router.get('/:id/add', Admin_Control.create_room_get);
+router.post('/:id/add', Admin_Control.create_room_post);
 
 router.get('/:id/room', Main.main);
 
