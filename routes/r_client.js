@@ -12,4 +12,6 @@ router.post('/edit/:id', User_Control.edit_post);
 
 router.get('/:id/room', Main.main);
 
+router.get('/logout', User_Control.logout)
+
 module.exports = router;

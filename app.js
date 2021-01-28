@@ -57,9 +57,10 @@ io.on('connection', socket => {
 // })
 
 app.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
 }))
 
 app.use(router);

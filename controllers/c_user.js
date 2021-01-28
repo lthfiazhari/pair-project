@@ -60,6 +60,13 @@ class User_Control {
   static chat (req, res) {
     res.redirect('client/chat')
   };
+
+  static logout (req, res) {
+    req.session.destroy((err) => {
+      if(err) res.render("error", {err})
+      else res.redirect("/")
+    })
+  }
 };
 
 module.exports = { User_Control };

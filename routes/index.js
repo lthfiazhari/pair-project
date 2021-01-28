@@ -7,6 +7,7 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 const checkLogin = function (req,res,next) {
+  console.log(req.session.userId);
     if(req.session.userId) {
       next();
     } else {
