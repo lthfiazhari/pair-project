@@ -11,7 +11,10 @@ class User_Control {
         
         return Room.findAll({ include: [ User ] })
       })
-      .then(result => res.render('client/v_main', { error: req.params.alerte, success: req.params.alerts, data, result }))
+      .then(result => {
+        data.username = data.capital(data.username)//<= instance method di model User
+        res.render('client/v_main', { error: req.params.alerte, success: req.params.alerts, data, result })
+      })
       .catch(err => res.redirect(`/?alerte=${err}`))
   };
 

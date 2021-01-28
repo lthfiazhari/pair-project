@@ -19,6 +19,19 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'user_id'
       })
     }
+
+    capital(data) {
+      let res = []
+      for(let i = 0; i < data.length; i++) {
+          if(i === 0){
+              res.push(data[i].toUpperCase())
+          } else {
+              res.push(data[i])
+          }
+      }
+      res = res.join('')
+      return res
+    }
   };
   User.init({
     username: {
