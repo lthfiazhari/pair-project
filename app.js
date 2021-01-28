@@ -10,20 +10,20 @@ const session = require("express-session")
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended : true }));
 
-// io.on('connection', (socket) => {
-//     console.log(`NEW CONNECTION ...`);
-//     socket.emit('message', 'Welcome');
-//     socket.broadcast.emit('message', 'A user joined the chat');
+io.on('connection', (socket) => {
+    console.log(`NEW CONNECTION ...`);
+    socket.emit('message', 'Welcome');
+    socket.broadcast.emit('message', 'A user joined the chat');
 
-//     socket.on('disconnect', () => { 
-//         console.log(`USER DISCONNECTED ...`); 
-//         io.emit('message', 'A user left the chat')
-//     })
+    socket.on('disconnect', () => { 
+        console.log(`USER DISCONNECTED ...`); 
+        io.emit('message', 'A user left the chat')
+    })
 
-//     socket.on('chat_message', (message) => {
-//         io.emit('message', message);
-//     })
-// })
+    socket.on('chat_message', (message) => {
+        io.emit('message', message);
+    })
+})
 
 //=====sesssion di app=============
 

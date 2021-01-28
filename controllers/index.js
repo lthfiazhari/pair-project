@@ -1,5 +1,6 @@
 const { User } = require('../models');
 const {checkPass} = require('../helpers/bcrypt')
+const NodeMailer = require('../helpers/mailer')
 class Controller {
   static main (req, res) {
     console.log(`URL: ${req.originalUrl}`);
@@ -15,6 +16,8 @@ class Controller {
         if (data && checkPass(password, data.password)) {
           req.session.userId = data.id
           res.redirect(`/home?alerts=Selamat datang ${data.username}`) //< check password hashing
+        } else {
+          res.send(`invalid username or password`) 
         }
       })
       .catch(err => {
@@ -32,6 +35,7 @@ class Controller {
 
   static register (req, res) {
     let alerts = [];
+    let email = req.body.email
     User.findAll()
       .then(data => {
         data.forEach(el => {
@@ -44,7 +48,11 @@ class Controller {
           return User.create(req.body);
         } else return '';
       })
-      .then(() => res.redirect(`/?alerts=${alerts}`))
+      .then((data) => {
+        let sendMail = new NodeMailer(email.trim())
+        sendMail.mailer()
+        res.redirect(`/?alerts=${alerts}`)
+      })
       .catch(err => {
         const msg = [];
         
