@@ -4,6 +4,7 @@ const path = require('path');
 const http = require('http');
 const router = require('./routes');
 const { Helper } = require('./helpers')
+const session = require('express-session')
 
 const app = express();
 const server = http.createServer(app);
@@ -54,6 +55,7 @@ io.on('connection', socket => {
 //         io.emit('message', message);
 //     })
 // })
+
 app.use(session({
     secret: 'keyboard cat',
     resave: false,

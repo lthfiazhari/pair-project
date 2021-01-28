@@ -70,11 +70,13 @@ class Controller {
       })
       .catch(err => {
         const msg = [];
-        
-        if (err.errors.length) {
+        console.log(err);
+        if (err.errors && err.errors.length) {
           err.errors.forEach(el => {
             msg.push(el.message)
           });
+        } else {
+          msg.push(err.message)
         }
         
         res.redirect(`/?alerte=${msg}`)
