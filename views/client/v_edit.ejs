@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= data.username %> Edit</title>
+</head>
+<body>
+    <%- include('../partials/v_alert') %>
+    <form action="/home/edit/<%= date.id %>" method="post">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" value="<%= data.username %>"><br><br>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" value="<%= data.email %>"><br><br>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password"><br><br>
+        <input type="submit" value="Daftar">
+    </form>
+</body>
+</html>

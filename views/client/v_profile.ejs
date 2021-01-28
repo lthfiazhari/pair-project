@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= data.username %> Profile</title>
+</head>
+<style>
+    #hide {
+        display: block;
+    }
+    #data {
+        display: none;
+    }
+</style>
+<body>
+    <%- include('../partials/v_alert') %>
+    <a href="/client/edit/<%= data.id %>">Edit</a><br>
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Password</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th><%= data.username %></th>
+                <th><%= data.email %></th>
+                <th>
+                    <div id="hide">
+                        <button onclick="show()">Show</button>
+                    </div>
+                    <div id="data">
+                        <%= data.password %>
+                    </div>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function show () {
+            let x = document.getElementById('hide');
+            let y = document.getElementById('data');
+    
+            if (y.style.display == 'block') {
+                y.style.display = 'none';
+            } else {
+                y.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
