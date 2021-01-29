@@ -1,0 +1,84 @@
+<%- include('../partials/v_client_header') %>
+
+<style>
+    #room {
+        display: none;
+    }
+</style>
+
+    <h2>Welcome <%= data.username %></h2> 
+
+    <% if (data.Rooms.length) { %>
+        <h3>List Registered Room</h3>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Room Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% data.Rooms.forEach(el => { %>
+                    <tr>
+                        <th><%= el.name %></th>
+                        <th><a href="/chat?username=<%= data.username %>&room=<%= el.name %>">Join</a></th>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table><br>
+    <% } else { %>
+        <h3>Registered Room Kosong, silahkan Register Room terlebih dahulu</h3>
+    <% } %>
+    
+    <button onclick="show()">Register New Room</button><br><br>
+
+    <% if (result.length) { %>
+        <table id="room" border="1">
+            <thead>
+                <tr>
+                    <th>Room Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% result.forEach(elr => { %>
+                    <% let count = 0; %>
+                    <% if (data.Rooms.length) { %>
+                        <% data.Rooms.forEach(eld => { %>
+                            <% if (eld.id == elr.id) count++ %>
+                        <% }) %>
+                        <% if (!count) { %>
+                            <tr>
+                                <th><%= elr.name %></th>
+                                <th><a href="/<%= data.role %>/<%= data.id %>/register/<%= elr.id %>">Register</a></th>
+                            </tr>
+                        <% } %>
+                    <% } else { %>
+                        <tr>
+                            <th><%= elr.name %></th>
+                            <th><a href="/<%= data.role %>/<%= data.id %>/register/<%= elr.id %>">Register</a></th>
+                        </tr>
+                    <% } %>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <h3 id="room">Room Kosong, silahkan meminta Admin untuk membuat Room</h3>
+    <% } %>
+
+    <% if (data.role == 'admin') { %>
+        <a href="/admin/<%= data.id %>/add">Add</a>
+    <% } %>
+
+
+    <script>
+        function show () {
+            let x = document.getElementById('room');
+    
+            if (x.style.display == 'block') x.style.display = 'none';
+            else x.style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>

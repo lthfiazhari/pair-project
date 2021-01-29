@@ -1,0 +1,9 @@
+<% if (success) { %>
+    <p style="color:green;"><%= success %></p>
+<% } %>
+<% if (error) { %>
+    <% error = error.split(',') %>
+    <% error.forEach(el => { %>
+        <p style="color:red;"><%= el %></p><br>
+    <% }) %>
+<% } %>
