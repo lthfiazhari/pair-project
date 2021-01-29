@@ -9,7 +9,7 @@ const session = require('express-session');
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server)
-const port = 3000;
+const port = process.env.port || 3000;
 const bot = 'ALEXA';
 
 app.set('view engine', 'ejs');

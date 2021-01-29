@@ -33,7 +33,13 @@ chat_form.addEventListener('submit', (e) => {
   e.preventDefault();
 
   // mengambil value input dengan id msg
-  const msg = e.target.elements.msg.value;
+  let msg = e.target.elements.msg.value;
+
+  msg = msg.trim();
+  
+  if (!msg){
+    return false;
+  }
 
   // mengirim value input ke server
   socket.emit('chatMessage', msg)
@@ -74,6 +80,4 @@ function outputUsers (users) {
     li.innerText = user.username;
     user_list.appendChild(li);
   });
-
-  console.log(user_list.innerHTML);
 };
